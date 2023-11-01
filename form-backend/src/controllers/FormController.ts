@@ -19,6 +19,21 @@ class FormController {
     }
   }
 
+  static async getFormById(req: Request, res: Response) {
+    const { id } = req.params;
+
+    try {
+      const form = await Form.findById(Number(id));
+      if (!form) {
+        return res.status(404).json({ message: 'Formulário não encontrado.' });
+      }
+
+      return res.status(200).json(form);
+    } catch (error) {
+      return res.status(500).json({ message: 'Erro ao obter o formulário pelo ID.' });
+    }
+  }
+
   static async updateForm(req: Request, res: Response) {
     const { id } = req.params;
     const { name, email, color, observation } = req.body;

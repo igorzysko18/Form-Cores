@@ -15,14 +15,6 @@ export const getFormByIdValidation = [
   param('id').isInt().withMessage('ID deve ser um número inteiro'),
 ];
 
-export const getFormByCpfValidation = [
-  param('cpf')
-    .isLength({ min: 11, max: 11 })
-    .withMessage('CPF deve conter 11 dígitos')
-    .isNumeric()
-    .withMessage('CPF deve conter apenas números'),
-];
-
 export const updateFormValidation = [
   param('id').isInt().withMessage('ID deve ser um número inteiro'),
   body('name').notEmpty().withMessage('O campo nome é obrigatório'),
