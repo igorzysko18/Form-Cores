@@ -4,6 +4,9 @@ import cors from 'cors';
 import formRouter from './routes/FormRoutes'; 
 import colorRouter from './routes/ColorRoutes'; 
 import createTables from './config/createDataBase'
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '../.env' });
 
 const app = express();
 app.use(cors());

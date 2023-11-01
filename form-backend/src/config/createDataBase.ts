@@ -1,9 +1,8 @@
 import pgPromise from 'pg-promise';
+import db from './db';
 
 const pgp = pgPromise();
-const db = pgp({
-  connectionString: 'postgresql://postgres:1234@localhost:5432/postgres',
-});
+
 async function createTables() {
   try {
     await db.none(`
@@ -62,8 +61,6 @@ async function createTables() {
     console.log('Tabelas criadas com sucesso!');
   } catch (error) {
     console.error('Erro ao criar tabelas:', error);
-  } finally {
-    pgp.end();
   }
 }
 
