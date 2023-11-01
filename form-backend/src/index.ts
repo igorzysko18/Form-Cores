@@ -3,12 +3,13 @@ import morgan from 'morgan';
 import cors from 'cors';
 import formRouter from './routes/FormRoutes'; 
 import colorRouter from './routes/ColorRoutes'; 
-
+import createTables from './config/createDataBase'
 
 const app = express();
 app.use(cors());
 const port = 3000;
 
+createTables();
 app.use(morgan('dev'));
 app.use(express.json());
 

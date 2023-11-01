@@ -67,4 +67,4 @@ async function createTables() {
   }
 }
 
-createTables();
+export default createTables;

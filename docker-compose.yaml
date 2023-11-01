@@ -1,0 +1,36 @@
+version: '3'
+services:
+  api:
+    build:
+      context: ./form-backend
+    ports:
+      - '3000:3000'
+    depends_on:
+      - postgres
+    networks:
+      - form-cores_my-network
+
+  frontend:
+    build:
+      context: ./form-frontend
+    ports:
+      - '3003:3003'
+    depends_on:
+      - api
+    networks:
+      - form-cores_my-network
+
+  postgres:
+    build:
+      context: ./postgres
+    environment:
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - '5432:5432'
+    networks:
+      - form-cores_my-network
+
+networks:
+  form-cores_my-network:
