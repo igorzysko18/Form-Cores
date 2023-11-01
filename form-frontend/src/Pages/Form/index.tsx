@@ -1,12 +1,14 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { Container, Form } from "./styles";
 import Input from "../../Components/Input/index";
 import Botao from "../../Components/Botao/index";
 import SelectCustomizado from "../../Components/Select/index";
 import { validarNome, validarColor, validarCpf, validarEmail, validarObservation } from "../../utils/validadores";
 import FormService from '../../Services/FormServices';
+import ColorService from '../../Services/ColorServices'; 
 
 const formService = new FormService();
+const colorService = new ColorService();
 
 interface FormState {
   name: string;
@@ -19,6 +21,7 @@ interface FormState {
 const PageForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [selectedColor, setSelectedColor] = useState('');
+  const [colors, setColors] = useState<string[]>([]);
   const [form, setForm] = useState<FormState>({
     name: '',
     cpf: '',
@@ -27,15 +30,18 @@ const PageForm: React.FC = () => {
     observation: ''
   });
 
-  const rainbowColors = [
-    'Vermelho',
-    'Laranja',
-    'Amarelo',
-    'Verde',
-    'Azul',
-    'Anil',
-    'Violeta',
-  ];
+  useEffect(() => {
+    const fetchColors = async () => {
+      try {
+        const colors = await colorService.getColors();
+        setColors(colors.map((color) => color.name));
+      } catch (error) {
+        console.error('Erro ao buscar cores da API:', error);
+      }
+    };
+
+    fetchColors();
+  }, []);
 
   const handleSubmit = async () => {
     try {
@@ -128,7 +134,7 @@ const PageForm: React.FC = () => {
         />
         <SelectCustomizado
           name='color'
-          options={rainbowColors}
+          options={colors}
           onChange={selectChange}
         />
         <Input
